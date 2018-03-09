@@ -7,7 +7,7 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
- * 初始化连接时候的各个组件
+ * 鍒濆鍖栬繛鎺ユ椂鍊欑殑鍚勪釜缁勪欢
  * 
  * @author changhr2013
  *

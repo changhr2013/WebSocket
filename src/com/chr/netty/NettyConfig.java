@@ -5,10 +5,10 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
- * 存储整个工程的全局变量
+ * 瀛樺偍鏁翠釜宸ョ▼鐨勫叏灞�鍙橀噺
  * */
 public class NettyConfig {
 
-	//存储每一个客户端接入进来时的channel对象
+	//瀛樺偍姣忎竴涓鎴风鎺ュ叆杩涙潵鏃剁殑channel瀵硅薄
 	public static ChannelGroup group=new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 }

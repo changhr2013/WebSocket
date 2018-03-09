@@ -1,4 +1,4 @@
-package com.chr.netty;
+ï»¿package com.chr.netty;
 
 import java.util.Date;
 
@@ -30,51 +30,51 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object>{
 
 	private WebSocketServerHandshaker handshaker;
 	private final String WEB_SOCKET_URL="ws://localhost:8888/websocket";
-	//·şÎñ¶Ë´¦Àí¿Í»§¶Ë WebSocket ÇëÇóµÄºËĞÄ·½·¨
+	//æœåŠ¡ç«¯å¤„ç†å®¢æˆ·ç«¯ WebSocket è¯·æ±‚çš„æ ¸å¿ƒæ–¹æ³•
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
 		if(msg instanceof FullHttpRequest) {
 			handHttpRequest(ctx, (FullHttpRequest)msg);
 		}else if(msg instanceof WebSocketFrame) {
-			//´¦ÀíWebSocketÁ¬½ÓÒµÎñ
+			//å¤„ç†WebSocketè¿æ¥ä¸šåŠ¡
 			handWebSocketFrame(ctx, (WebSocketFrame)msg);
 		}
 		
 	}
 	
 	/**
-	 * ´¦Àí¿Í»§¶ËÓë·şÎñ¶ËÖ®¼äµÄwebsocketÒµÎñ
+	 * å¤„ç†å®¢æˆ·ç«¯ä¸æœåŠ¡ç«¯ä¹‹é—´çš„websocketä¸šåŠ¡
 	 * 
 	 * @param ctx
 	 * @param frame
 	 */
 	private void handWebSocketFrame(ChannelHandlerContext ctx,WebSocketFrame frame) {
 		
-		//ÅĞ¶ÏÊÇ·ñÊÇ¹Ø±ÕwebsocketµÄÖ¸Áî
+		//åˆ¤æ–­æ˜¯å¦æ˜¯å…³é—­websocketçš„æŒ‡ä»¤
 		if(frame instanceof CloseWebSocketFrame) {
 			handshaker.close(ctx.channel(), (CloseWebSocketFrame)frame.retain());
 		}
-		//ÅĞ¶ÏÊÇ·ñÎªpingÏûÏ¢
+		//åˆ¤æ–­æ˜¯å¦ä¸ºpingæ¶ˆæ¯
 		if(frame instanceof PingWebSocketFrame) {
 			ctx.channel().write(new PongWebSocketFrame(frame.content().retain()));
 		}
-		//ÅĞ¶ÏÊÇ·ñÎª¶ş½øÖÆÏûÏ¢£¬Èç¹ûÊÇ¶ş½øÖÆÏûÏ¢£¬Å×³öÒì³£
+		//åˆ¤æ–­æ˜¯å¦ä¸ºäºŒè¿›åˆ¶æ¶ˆæ¯ï¼Œå¦‚æœæ˜¯äºŒè¿›åˆ¶æ¶ˆæ¯ï¼ŒæŠ›å‡ºå¼‚å¸¸
 		if(!(frame instanceof TextWebSocketFrame)) {
-			System.out.println("Ä¿Ç°ÎÒÃÇ²»Ö§³Ö¶ş½øÖÆÏûÏ¢");
-			throw new RuntimeException("¡¾"+this.getClass().getName()+"¡¿"+"²»Ö§³ÖÏûÏ¢");
+			System.out.println("ç›®å‰æˆ‘ä»¬ä¸æ”¯æŒäºŒè¿›åˆ¶æ¶ˆæ¯");
+			throw new RuntimeException("ã€"+this.getClass().getName()+"ã€‘"+"ä¸æ”¯æŒæ¶ˆæ¯");
 		}
-		//·µ»ØÓ¦´ğÏûÏ¢
-		//»ñÈ¡¿Í»§¶ËÏò·şÎñ¶Ë·¢ËÍµÄÏûÏ¢
+		//è¿”å›åº”ç­”æ¶ˆæ¯
+		//è·å–å®¢æˆ·ç«¯å‘æœåŠ¡ç«¯å‘é€çš„æ¶ˆæ¯
 		String request=((TextWebSocketFrame)frame).text();
-		System.out.println("·şÎñ¶ËÊÕµ½¿Í»§¶ËÏûÏ¢£º"+request);
+		System.out.println("æœåŠ¡ç«¯æ”¶åˆ°å®¢æˆ·ç«¯æ¶ˆæ¯ï¼š"+request);
 		TextWebSocketFrame tws=new TextWebSocketFrame(new Date().toString()+" => "+ctx.channel().id()+" => "+request);
 		
-		//Èº·¢£¬·şÎñ¶ËÏòÃ¿¸öÁ¬½ÓÉÏÀ´µÄ¿Í»§¶ËÈº·¢ÏûÏ¢
+		//ç¾¤å‘ï¼ŒæœåŠ¡ç«¯å‘æ¯ä¸ªè¿æ¥ä¸Šæ¥çš„å®¢æˆ·ç«¯ç¾¤å‘æ¶ˆæ¯
 		NettyConfig.group.writeAndFlush(tws);
 	}
 	
 	/**
-	 * ´¦Àí¿Í»§¶ËÏò·şÎñ¶Ë·¢Æğ http ÎÕÊÖÇëÇóµÄÒµÎñ
+	 * å¤„ç†å®¢æˆ·ç«¯å‘æœåŠ¡ç«¯å‘èµ· http æ¡æ‰‹è¯·æ±‚çš„ä¸šåŠ¡
 	 * 
 	 * @param ctx
 	 * @param req
@@ -95,7 +95,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object>{
 	
 	
 	/**
-	 * ·şÎñ¶ËÏò¿Í»§¶ËÏìÓ¦ÏûÏ¢
+	 * æœåŠ¡ç«¯å‘å®¢æˆ·ç«¯å“åº”æ¶ˆæ¯
 	 * 
 	 * @param ctx
 	 * @param req
@@ -107,7 +107,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object>{
 			res.content().writeBytes(buf);
 			buf.release();
 		}
-		//·şÎñ¶ËÏò¿Í»§¶Ë·¢ËÍÊı¾İ
+		//æœåŠ¡ç«¯å‘å®¢æˆ·ç«¯å‘é€æ•°æ®
 		ChannelFuture f=ctx.channel().writeAndFlush(res);
 		
 		if(res.status().code()!=200) {
@@ -115,7 +115,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object>{
 		}
 	}
 
-	//¹¤³Ì³öÏÖÒì³£µÄÊ±ºòµ÷ÓÃ
+	//å·¥ç¨‹å‡ºç°å¼‚å¸¸çš„æ—¶å€™è°ƒç”¨
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
@@ -123,21 +123,21 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object>{
 		ctx.close();
 	}
 
-	//¿Í»§¶ËÓë·şÎñ¶Ë´´½¨Á¬½ÓµÄÊ±ºòµ÷ÓÃ
+	//å®¢æˆ·ç«¯ä¸æœåŠ¡ç«¯åˆ›å»ºè¿æ¥çš„æ—¶å€™è°ƒç”¨
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		NettyConfig.group.add(ctx.channel());
-		System.out.println("¿Í»§¶ËÓë·şÎñ¶ËÁ¬½Ó¿ªÆô¡£");
+		System.out.println("å®¢æˆ·ç«¯ä¸æœåŠ¡ç«¯è¿æ¥å¼€å¯ã€‚");
 	}
 
-	//¿Í»§¶ËÓë·şÎñ¶Ë¶Ï¿ªÁ¬½ÓµÄÊ±ºòµ÷ÓÃ
+	//å®¢æˆ·ç«¯ä¸æœåŠ¡ç«¯æ–­å¼€è¿æ¥çš„æ—¶å€™è°ƒç”¨
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
 		NettyConfig.group.remove(ctx.channel());
 	}
 
-	//·şÎñ¶Ë½ÓÊÕ¿Í»§¶Ë·¢ËÍ¹ıÀ´µÄÊı¾İ½áÊøÖ®ºóµ÷ÓÃ
+	//æœåŠ¡ç«¯æ¥æ”¶å®¢æˆ·ç«¯å‘é€è¿‡æ¥çš„æ•°æ®ç»“æŸä¹‹åè°ƒç”¨
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 
