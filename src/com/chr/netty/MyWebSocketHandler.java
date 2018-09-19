@@ -1,14 +1,9 @@
-﻿package com.chr.netty;
+package com.chr.netty;
 
 import java.util.Date;
 
-import javax.management.RuntimeErrorException;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -32,19 +27,19 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object>{
 	private final String WEB_SOCKET_URL="ws://localhost:8888/websocket";
 	//服务端处理客户端 WebSocket 请求的核心方法
 	@Override
-	protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
 		if(msg instanceof FullHttpRequest) {
 			handHttpRequest(ctx, (FullHttpRequest)msg);
 		}else if(msg instanceof WebSocketFrame) {
 			//处理WebSocket连接业务
 			handWebSocketFrame(ctx, (WebSocketFrame)msg);
 		}
-		
+
 	}
-	
+
 	/**
 	 * 处理客户端与服务端之间的websocket业务
-	 * 
+	 *
 	 * @param ctx
 	 * @param frame
 	 */
